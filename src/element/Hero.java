@@ -2,7 +2,9 @@ package element;
 
 import utils.tools;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public class Hero extends Obj {
@@ -20,32 +22,52 @@ public class Hero extends Obj {
             image = tools.hero_1;
         }
         this.frame = frame;
-
+    }
+    private void action(){
+        if(isUp){
+            jump();
+        }
+        if(isDown){
+            move(DOWN);
+        }
+        if(isLeft){
+            move(LEFT);
+        }
+        if(isRight){
+            move(RIGHT);
+        }
     }
 
     @Override
     public void paintSelf(Graphics g) {
         g.drawImage(image,location.x,location.y,height,width,null);
         fall();
+        action();
     }
 
+    private boolean isLeft = false;
+    private boolean isRight = false;
+    private boolean isUp = false;
+    private boolean isDown = false;
     public void keypress(KeyEvent e){
         int key = e.getKeyCode();
-        switch(key){
-            case 37 :
-                move(LEFT);
-                break;
-            case 39 :
-                move(RIGHT);
-                break;
-            case 38 :
-                jump();
-                break;
-            case 40 :
-                 move(DOWN);
-
+        switch (key) {
+            case 37 -> isLeft = true;
+            case 39 -> isRight = true;
+            case 38 -> isUp = true;
+            case 40 -> isDown = true;
         }
     }
+    public void keyRelease(KeyEvent e){
+        int key = e.getKeyCode();
+        switch(key){
+            case 37 -> isLeft = false;
+            case 39 -> isRight = false;
+            case 38 -> isUp = false;
+            case 40 -> isDown = false;
+        }
+    }
+
 
 
 
@@ -53,10 +75,10 @@ public class Hero extends Obj {
     public void move(int d) {
         switch(d){
             case LEFT :
-                location.x -= 3;
+                location.x -= 6;
                 break;
             case RIGHT :
-                location.x += 3;
+                location.x += 6;
                 break;
             case DOWN :
                 location.y += 3;

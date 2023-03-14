@@ -41,6 +41,11 @@ public class PlayFrame extends JFrame {
             public void keyPressed(KeyEvent e) {
                 hero_1.keypress(e);
             }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                hero_1.keyRelease(e);
+            }
         });
 
         //mouseListener
